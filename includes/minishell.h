@@ -6,13 +6,18 @@
 /*   By: bchanteu <bchanteu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:02:08 by bchanteu          #+#    #+#             */
-/*   Updated: 2025/11/28 15:31:02 by bchanteu         ###   ########.fr       */
+/*   Updated: 2025/11/28 15:54:37 by bchanteu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+//INCLUDES 
+#include <stdio.h>
+#include "libft.h"
+
+//STRUCTURES
 typedef struct s_history
 {
 	char	*command;
