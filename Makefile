@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: grcharle </var/spool/mail/grcharle>        +#+  +:+       +#+         #
+#    By: bchanteu <bchanteu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/11/27 00:10:14 by grcharle          #+#    #+#              #
-#    Updated: 2025/11/27 00:10:17 by grcharle         ###   ########.fr        #
+#    Created: 2025/11/28 15:01:10 by bchanteu          #+#    #+#              #
+#    Updated: 2025/11/28 15:05:41 by bchanteu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ LIBFT := libft
 
 CPPFLAGS := \
 -I ./ \
+-I ./includes/ \
 -I ./includes/$(LIBFT)
 
 # Specifies options for the linker:
@@ -41,7 +42,7 @@ LDLIBS := \
 -lft \
 -lpthread
 
-NAME := philo
+NAME := minishell
 
 DIR_MANDATORY := $(NAME)
 
