@@ -10,10 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-# Set default rule when 'make all'
 .DEFAULT_GOAL := all
 
-# Hide message 'Entering directory' & 'Leaving directory'
 MAKEFLAGS += --no-print-directory
 
 CC := cc
@@ -24,26 +22,20 @@ CFLAGS := \
 	-fno-omit-frame-pointer \
 	-fPIE -fPIC -O2 -g
 
-# Delete files & empty directories
 RM := rm -f -v
 RM_DIR := rmdir -v
 
 LIBRARY := includes/
 
-# Project Libft (+GetNextLine/+FtPrintF)
 LIBFT := $(addprefix $(LIBRARY), libft)
 
 CPPFLAGS := \
 	-I $(LIBRARY) \
 	-I $(LIBFT)
 
-# Specifies options for the linker:
-# example: -L/usr/local/lib
 LDFLAGS := \
 	-L $(LIBFT)
 
-# Lists libraries to link with:
-# example: -lm -lpthread
 LDLIBS := \
 	-lft \
 	-lreadline
