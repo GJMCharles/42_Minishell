@@ -28,10 +28,10 @@ CFLAGS := \
 RM := rm -f -v
 RM_DIR := rmdir -v
 
-LIBRARY := ./includes
+LIBRARY := includes/
 
 # Project Libft (+GetNextLine/+FtPrintF)
-LIBFT := $(addprefix $(LIBRARY)/, libft)
+LIBFT := $(addprefix $(LIBRARY), libft)
 
 CPPFLAGS := \
 	-I $(LIBRARY) \
@@ -50,18 +50,17 @@ LDLIBS := \
 
 NAME := minishell
 
-DIR_MANDATORY := srcs
+DIR_MANDATORY := srcs/
 
-OBJECTS_DIR := .objects
+OBJECTS_DIR := .objects/
 
 SOURCES_MANDATORY := \
 	main.c
 
 OBJECTS_MANDATORY := \
-$(patsubst \
-	$(DIR_MANDATORY)/%.c,\
-	$(OBJECTS_DIR)/%.o,\
-	$(addprefix $(DIR_MANDATORY)/, $(SOURCES_MANDATORY))\
+$(patsubst $(DIR_MANDATORY)%.c, \
+	$(OBJECTS_DIR)%.o,\
+	$(addprefix $(DIR_MANDATORY), $(SOURCES_MANDATORY))\
 )
 
 DEPS_MANDATORY := $(OBJECTS_MANDATORY:.o=.d)
@@ -71,17 +70,17 @@ DEPS_MANDATORY := $(OBJECTS_MANDATORY:.o=.d)
 $(OBJECTS_DIR):
 	mkdir -p $@
 
-$(OBJECTS_DIR)/%.o: $(DIR_MANDATORY)/%.c | $(OBJECTS_DIR)
+$(OBJECTS_DIR)%.o: $(DIR_MANDATORY)%.c | $(OBJECTS_DIR)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
-
-$(NAME): LIBS $(OBJECTS_MANDATORY)
 
 LIBS:
 	$(MAKE) -C $(LIBFT)
 
+$(NAME): $(OBJECTS_MANDATORY) | LIBS
+	$(CC) $(CFLAGS) $^ $(LDFLAGS) $(LDLIBS) -o $@
+	@echo -e "Generated executable: $@"
+
 all: $(NAME)
-	$(CC) $(CFLAGS) $(OBJECTS_MANDATORY) $(LDFLAGS) $(LDLIBS) -o $^
-	@echo -e "Generated executable: $^"
 
 clean:
 	@$(MAKE) -C $(LIBFT) clean
@@ -93,16 +92,20 @@ clean:
 
 fclean: clean
 	@$(MAKE) -C $(LIBFT) fclean
-	@$(RM) ./$(NAME)/$(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 
 debug: re
-	-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME)
+	-valgrind \
+	--leak-check=full \
+	--show-leak-kinds=all \
+	--track-origins=yes \
+	-s $(NAME)
 
 norm:
-	-norminette -R $(shell find ./includes -type f -name "*.h")
-	-norminette -R $(shell find ./srcs -type f -name "*.c")
+	-norminette -R $(shell find includes -type f -name "*.h")
+	-norminette -R $(shell find srcs -type f -name "*.c")
 
 .SECONDARY: $(OBJECTS_MANDATORY)
 
@@ -110,4 +113,4 @@ norm:
 
 .SILENT:
 
-.PHONY: all clean fclean re debug norm
+.PHONY: all clean fclean re LIBS debug norm

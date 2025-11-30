@@ -27,7 +27,7 @@ LDLIBS :=
 NAME := libft.a
 NAME_BONUS := libft_bonus.a
 
-OBJECTS_DIR := .objects
+OBJECTS_DIR := .objects/
 
 RM := rm -f
 
@@ -82,12 +82,12 @@ SOURCES_EXTRA :=
 
 OBJECTS_MANDATORY := \
 	$(patsubst %.c, \
-		$(OBJECTS_DIR)/%.o, \
+		$(OBJECTS_DIR)%.o, \
 		$(SOURCES_MANDATORY) $(SOURCES_EXTRA)\
 	)
 OBJECTS_BONUS := \
 	$(patsubst %.c, \
-		$(OBJECTS_DIR)/%.o, \
+		$(OBJECTS_DIR)%.o, \
 		$(SOURCES_BONUS)\
 	)
 
@@ -99,7 +99,7 @@ DEPS_BONUS := $(OBJECTS_BONUS:.o=.d)
 $(OBJECTS_DIR):
 	mkdir -p $@
 
-$(OBJECTS_DIR)/%.o: %.c | $(OBJECTS_DIR)
+$(OBJECTS_DIR)%.o: %.c | $(OBJECTS_DIR)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 $(NAME): $(OBJECTS_MANDATORY)
