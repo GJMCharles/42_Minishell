@@ -89,7 +89,7 @@ fclean: clean
 re: fclean all
 
 debug: re
-	-valgrind \
+	+valgrind \
 	--leak-check=full \
 	--show-leak-kinds=all \
 	--track-origins=yes \
@@ -103,6 +103,6 @@ norm:
 
 .PRECIOUS: $(OBJECTS_DIR)
 
-.SILENT:
+# .SILENT:
 
 .PHONY: all clean fclean re LIBS debug norm
